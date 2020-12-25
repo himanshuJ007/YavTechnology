@@ -10,9 +10,11 @@ var del = document.getElementById("delete");
 
 var get = document.getElementById("get");
 // urls
-const url = "https://crudcrud.com/api/351f602b7504498ca5bb5ae040e07c31";
+const url = "https://crudcrud.com/api/86da5251514b4330858dd58ed9cba8a2";
 
-submit.addEventListener("click", () => {
+
+
+submit.addEventListener("click", function abc() {
   var name_post = document.getElementById("name_post");
   var email_post = document.getElementById("email_post");
   var phone_post = document.getElementById("phone_post");
@@ -23,14 +25,15 @@ submit.addEventListener("click", () => {
     phone: phone_post.value,
   };
   console.log(post_data);
-  post(url + "/post", post_data);
+  axios.post(url + "/crud", post_data).then((response)=>{
+    console.log("ye",response.data);
+
+  });
+
+
 });
 
-function post(u, data) {
-  axios.post(u, data).then(() => {
-    console.log("Successfully Post");
-  });
-}
+
 
 update.addEventListener("click", () => {
   var id_update = document.getElementById("id_update");
@@ -44,7 +47,7 @@ update.addEventListener("click", () => {
     phone: phone_update.value,
   };
   console.log(update_data);
-  update_it(url + "/post/"+id_update.value, update_data);
+  update_it(url + "/crud/"+id_update.value, update_data);
 });
 
 function update_it(u, data) {
@@ -55,7 +58,7 @@ function update_it(u, data) {
 
 del.addEventListener("click", () => {
   var id_delete = document.getElementById("id_delete");
-  delete_data(url + "/post/"+id_delete.value);
+  delete_data(url + "/crud/"+id_delete.value);
 });
 
 function delete_data(u) {
@@ -65,20 +68,21 @@ function delete_data(u) {
 }
 
 get.addEventListener("click", () => {
-    axios.get(url+"/post")
+    axios.get(url+"/crud")
   .then((response) => {
-    console.log(response.data[0]);
+    console.log(response.data);
     var data= response.data;
     var name_get = document.getElementById("name_get");
     var email_get = document.getElementById("email_get");
     var phone_get = document.getElementById("phone_get");
-    // data.forEach(element => {
-        
-    // });
+
     name_get.value = data[0].name;
     email_get.value = data[0].email;
     phone_get.value = data[0].phone;
   });
   
 });
+
+
+
 
